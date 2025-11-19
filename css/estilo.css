@@ -1,0 +1,404 @@
+#tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Arial", sans-serif;
+}
+#tabla th, #tabla td {
+  padding: 8px 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+#tabla th {
+  background-color: #333;
+  color: #fff;
+}
+#tabla tbody tr {
+  transition: background 0.2s;
+}
+#tabla tbody tr:hover {
+  background-color: #f5f5f5;
+}
+#tabla tbody tr:first-child {
+  background-color: #FFD700;
+  font-weight: bold;
+  color: #000;
+}
+#tabla tbody tr:nth-child(n+2):nth-child(-n+8) {
+  background-color: #d9f7d9;
+  font-weight: bold;
+  color: #064d06;
+}
+
+/* FIXTURE COMPLETO */
+.fixture-fecha {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+}
+.fixture-fecha h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  color: #222;
+  border-left: 4px solid #2196F3;
+  padding-left: 8px;
+}
+
+.partido-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.partido-item span {
+  font-weight: bold;
+}
+
+.partido-estado {
+  color: #555;
+  font-size: 0.9rem;
+}
+.partido-estado.finalizado {
+  color: #4CAF50;
+  font-weight: bold;
+}
+.partido-estado.pendiente {
+  color: #f44336;
+  font-weight: bold;
+}
+
+#fixture-completo {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 15px;
+}
+#fixture-completo .fixture-fecha {
+  background: #fdfdfd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+#fixture-completo .fixture-fecha h3 {
+  margin-bottom: 18px;
+  font-size: 1.4rem;
+  color: #222;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+#fixture-completo .fixture-fecha .partido-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+#fixture-completo .fixture-fecha .partido-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+#fixture-completo .fixture-fecha .partido-item .fila-equipos {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-equipos span {
+  flex: 1;
+  text-align: center;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .resultado {
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .partido-estado {
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .partido-estado.finalizado.local {
+  background: #4caf50;
+  color: #fff;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .partido-estado.finalizado.visitante {
+  background: #f44336;
+  color: #fff;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .partido-estado.finalizado.empate {
+  background: #ffc107;
+  color: #000;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .partido-estado.pendiente {
+  background: #e0e0e0;
+  color: #333;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .btn-detalles {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+#fixture-completo .fixture-fecha .partido-item .fila-resultado .btn-detalles:hover {
+  background: #1976d2;
+}
+
+.partidos-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.partido {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: "Inter", sans-serif;
+}
+
+.partido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.partido-header .jugador {
+  padding: 4px 8px;
+  border-radius: 6px;
+  flex: 1;
+  text-align: center;
+}
+.partido-header .jugador.local {
+  color: #4CAF50;
+  background: #e6f4ea;
+}
+.partido-header .jugador.visitante {
+  color: #f44336;
+  background: #fdecea;
+}
+.partido-header .vs {
+  margin: 0 8px;
+  font-weight: 500;
+  color: #666;
+}
+
+.resultado {
+  align-self: flex-start;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f0f4ff;
+  color: #2196F3;
+  font-size: 0.9rem;
+}
+
+.resultado-dorado {
+  background: #FFD700;
+  color: #000;
+}
+
+.resultado-gris {
+  background: #D3D3D3;
+  color: #000;
+}
+
+.partido-botones {
+  display: flex;
+  gap: 8px;
+}
+.partido-botones button {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.partido-botones button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.partido-botones button:nth-child(1) {
+  background: #4CAF50;
+  color: white;
+}
+.partido-botones button:nth-child(2) {
+  background: #f44336;
+  color: white;
+}
+.partido-botones button:nth-child(3) {
+  background: #FFC107;
+  color: black;
+}
+.partido-botones button:nth-child(4) {
+  background: #2196F3;
+  color: white;
+}
+
+#boton-siguiente-container button {
+  background-color: #d3d3d3; /* gris claro */
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#boton-siguiente-container button:hover:enabled {
+  background-color: #bfbfbf;
+  transform: scale(1.05);
+}
+
+#boton-siguiente-container button:active:enabled {
+  background-color: #a9a9a9;
+  transform: scale(0.98);
+}
+
+#boton-siguiente-container button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* CONTENEDORES GENERALES */
+#fixture-completo,
+#partidos {
+  margin-top: 12px;
+}
+
+#fixture-completo div {
+  margin-bottom: 12px;
+}
+
+#fixture-completo h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+body {
+  background-color: rgba(251, 255, 236, 0.822);
+}
+
+h1, h2 {
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+  color: #222;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: #555;
+  border-left: 4px solid #2196F3;
+  padding-left: 10px;
+}
+
+/* CONTENEDOR MODERNO */
+.resultado-moderno {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 10px 0;
+  gap: 10px;
+}
+
+.res-opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+  width: 90px;
+}
+.res-opcion:hover {
+  transform: scale(1.07);
+}
+.res-opcion span {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+}
+.res-opcion.empate .res-cuadro {
+  border-color: #777;
+}
+.res-opcion.empate:hover .res-cuadro {
+  background: #ddd;
+  border-color: #444;
+}
+
+.res-cuadro {
+  width: 45px;
+  height: 45px;
+  border: 3px solid #333;
+  border-radius: 10px;
+  background: #f5f5f5;
+  margin-bottom: 5px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.res-opcion:hover .res-cuadro {
+  background: #eaeaea;
+  border-color: #000;
+}
+
+.btn-editar {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background: #040338;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn-editar:hover {
+  background: #cbdbc2;
+  color: black;
+}
+
+/*# sourceMappingURL=estilo.css.map */

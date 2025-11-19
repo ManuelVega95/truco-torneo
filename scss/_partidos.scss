@@ -1,0 +1,138 @@
+@use "variables" as v;
+
+.partidos-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.partido {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.partido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+
+  .jugador {
+    padding: 4px 8px;
+    border-radius: 6px;
+    flex: 1;
+    text-align: center;
+
+    &.local { 
+      color: v.$color-green; 
+      background: #e6f4ea; 
+    }
+
+    &.visitante { 
+      color: v.$color-red; 
+      background: #fdecea; 
+    }
+  }
+
+  .vs {
+    margin: 0 8px;
+    font-weight: 500;
+    color: #666;
+  }
+}
+
+.resultado {
+  align-self: flex-start;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f0f4ff;
+  color: v.$color-primary;
+  font-size: 0.9rem;
+}
+
+.resultado-dorado {
+  background: #FFD700;
+  color: #000;
+}
+
+.resultado-gris {
+  background: #D3D3D3;
+  color: #000;
+}
+
+.partido-botones {
+  display: flex;
+  gap: 8px;
+
+  button {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+
+    &:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    }
+
+    &:nth-child(1) { 
+      background: v.$color-green; 
+      color: white; 
+    }
+    &:nth-child(2) { 
+      background: v.$color-red; 
+      color: white; 
+    }
+    &:nth-child(3) { 
+      background: v.$color-yellow; 
+      color: black; 
+    }
+    &:nth-child(4) { 
+      background: v.$color-primary; 
+      color: white; 
+    }
+  }
+}
+
+#boton-siguiente-container button {
+    background-color: #d3d3d3; /* gris claro */
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#boton-siguiente-container button:hover:enabled {
+    background-color: #bfbfbf;
+    transform: scale(1.05);
+}
+
+#boton-siguiente-container button:active:enabled {
+    background-color: #a9a9a9;
+    transform: scale(0.98);
+}
+
+#boton-siguiente-container button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}

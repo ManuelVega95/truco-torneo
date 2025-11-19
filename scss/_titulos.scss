@@ -1,0 +1,24 @@
+@use 'variables' as *;
+
+body{
+  background-color: rgba(251, 255, 236, 0.822);
+}
+
+h1, h2 {
+  font-family: $font-heading;
+  margin-bottom: $spacing-heading;
+}
+
+h1 {
+  font-size: 2.2rem;
+  color: $color-h1;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: $color-h2;
+  border-left: 4px solid #2196F3;
+  padding-left: 10px;
+}

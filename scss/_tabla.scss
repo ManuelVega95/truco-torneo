@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+#tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Arial', sans-serif;
+
+  th, td {
+    padding: 8px 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: $color-th-bg;
+    color: $color-th-text;
+  }
+
+  tbody tr {
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: $color-hover;
+    }
+
+    &:first-child {
+      background-color: $color-primero;
+      font-weight: bold;
+      color: $color-default-text;
+    }
+
+    &:nth-child(n+2):nth-child(-n+8) {
+      background-color: $color-clasificacion;
+      font-weight: bold;
+      color: $color-clasificacion-text;
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="../fotos/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../css/estilo.css">
+<title>Historial del Torneo</title>
+
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  h2 { margin-top: 40px; }
+  table { border-collapse: collapse; margin-top: 10px; width: 100%; }
+  th, td { border: 1px solid #333; padding: 5px 10px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>Historial del Torneo</h1>
+
+<div id="historial"></div>
+
+<script>
+  const historial = JSON.parse(localStorage.getItem('historial')) || [];
+
+  const cont = document.getElementById('historial');
+
+  if (historial.length === 0) {
+    cont.innerHTML = "<p>No hay resultados aún.</p>";
+  } else {
+
+    historial.forEach((tablaFecha, fIndex) => {
+
+      const titulo = document.createElement('h2');
+      titulo.textContent = `Tabla al finalizar Fecha ${fIndex + 1}`;
+      cont.appendChild(titulo);
+
+      const table = document.createElement('table');
+
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Jugador</th>
+            <th>PJ</th>
+            <th>V</th>
+            <th>E</th>
+            <th>D</th>
+            <th>Puntos</th>
+            <th>Bonus</th>
+            <th>Últimos 5 Partidos</th>
+          </tr>
+        </thead>
+      `;
+
+      const tbody = document.createElement("tbody");
+
+      tablaFecha
+        .sort((a, b) => b.puntos - a.puntos)
+        .forEach((j, index) => {
+
+          const tr = document.createElement("tr");
+
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${j.nombre}</td>
+            <td>${j.PJ}</td>
+            <td>${j.V}</td>
+            <td>${j.E}</td>
+            <td>${j.D}</td>
+            <td>${j.puntos}</td>
+            <td>${j.bonus}</td>
+            <td>${(j.ultimos || []).join(" ")}</td>
+          `;
+
+          tbody.appendChild(tr);
+        });
+
+      table.appendChild(tbody);
+      cont.appendChild(table);
+    });
+  }
+</script>
+
+</body>
+</html>
