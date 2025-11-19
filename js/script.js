@@ -27,7 +27,7 @@ if (localStorage.getItem("torneo")) {
 // -----------------------------------------------------
 // CARGA DE PARTICIPANTES DESDE jugadores.json
 // -----------------------------------------------------
-fetch("../jugadores.json")
+fetch("jugadores.json")
     .then(res => res.json())
     .then(data => {
         if (jugadores.length === 0) {
