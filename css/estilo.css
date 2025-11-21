@@ -401,4 +401,92 @@ h2 {
   color: black;
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f1f1f;
+  padding: 10px 20px;
+  border-bottom: 3px solid #ffc107;
+}
+.navbar h1 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
+}
+.navbar .nav-right {
+  display: flex;
+  gap: 10px;
+}
+.navbar .nav-right button {
+  background-color: #ffc107;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #000;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.navbar .nav-right button:hover {
+  background-color: #e0a800;
+  transform: scale(1.05);
+}
+.navbar .nav-right .nav-link {
+  display: inline-block;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.navbar .nav-right .nav-link:hover {
+  background-color: #555;
+}
+
+footer {
+  background-color: #1f1f1f;
+  border-top: 3px solid #ffc107;
+  padding: 15px 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+footer .footer-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+footer .footer-container button, footer .footer-container .import-btn {
+  background-color: #ffc107;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #000;
+  transition: background-color 0.2s, transform 0.1s;
+}
+footer .footer-container button:hover, footer .footer-container .import-btn:hover {
+  background-color: #e0a800;
+  transform: scale(1.05);
+}
+footer .footer-container .import-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+}
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /*# sourceMappingURL=estilo.css.map */

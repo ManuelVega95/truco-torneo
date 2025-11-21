@@ -1,3 +1,6 @@
+let adminMode = false;
+const ADMIN_PASS = "11037";
+
 // -----------------------------------------------------
 // VARIABLES GLOBALES DEL TORNEO
 // -----------------------------------------------------
@@ -232,7 +235,10 @@ function renderPartidosFila(partidos, offset, container) {
             const edit = document.createElement("button");
             edit.textContent = "Editar";
             edit.classList.add("btn-editar");
-
+if (!adminMode) {
+    edit.disabled = true;
+    edit.style.opacity = 0.5;
+}
             edit.onclick = () => {
                 const original = p.resultado;
                 p.resultado = null;
@@ -253,6 +259,10 @@ function renderPartidosFila(partidos, offset, container) {
 // REGISTRAR UN RESULTADO NUEVO
 // -----------------------------------------------------
 function registrarResultado(fechaIndex, partidoIndex, resultado) {
+    if (!adminMode) {
+    alert("Solo el administrador puede editar resultados.");
+    return;
+}
     const partido = fixture[fechaIndex][partidoIndex];
 
     if (partido.resultado) {
@@ -516,7 +526,7 @@ function mostrarFixtureSeleccionado(index) {
         const item = document.createElement("div");
         item.className = "partido-item";
 
-        let r =
+        const r =
             p.resultado === "local" ? `Ganó ${jugadores[p.local].nombre}` :
             p.resultado === "visitante" ? `Ganó ${jugadores[p.visitante].nombre}` :
             p.resultado === "empate" ? "Empate" : "Pendiente";
@@ -524,8 +534,14 @@ function mostrarFixtureSeleccionado(index) {
         const clase = p.resultado ? `finalizado ${p.resultado}` : "pendiente";
 
         item.innerHTML = `
-            <span>${jugadores[p.local].nombre} vs ${jugadores[p.visitante].nombre}</span>
-            <span class="partido-estado ${clase}">${r}</span>
+            <div class="fila-jugadores">
+                <span>${jugadores[p.local].nombre}</span>
+                <span>vs</span>
+                <span>${jugadores[p.visitante].nombre}</span>
+            </div>
+            <div class="fila-resultado">
+                <span class="partido-estado ${clase}">${r}</span>
+            </div>
         `;
 
         div.appendChild(item);
@@ -533,6 +549,7 @@ function mostrarFixtureSeleccionado(index) {
 
     cont.appendChild(div);
 }
+
 
 // -----------------------------------------------------
 // GUARDAR HISTORIAL DE UNA FECHA
@@ -691,6 +708,10 @@ function guardarLocalStorage() {
 // REINICIAR TODO EL TORNEO DESDE CERO
 // -----------------------------------------------------
 function reiniciarTorneo() {
+    if (!adminMode) {
+    alert("Solo el administrador puede reiniciar el torneo.");
+    return;
+}
     if (!confirm("¿Seguro que querés reiniciar el torneo completo?")) return;
 
     localStorage.removeItem("torneo");
@@ -758,3 +779,91 @@ function shuffleArray(arr) {
     }
     return a;
 }
+
+// -----------------------------------------------------
+// EXPORTAR TORNEO
+// -----------------------------------------------------
+
+function exportarTorneo() {
+    const data = {
+        jugadores,
+        fixture,
+        fechaActual,
+        historial: JSON.parse(localStorage.getItem("historial")) || []
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "torneo_backup.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+// -----------------------------------------------------
+// IMPORTAR TORNEO
+// -----------------------------------------------------
+
+function importarTorneo(file) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+
+            // Restaurar datos
+            jugadores = data.jugadores;
+            fixture = data.fixture;
+            fechaActual = data.fechaActual;
+
+            localStorage.setItem("torneo", JSON.stringify({
+                jugadores,
+                fixture,
+                fechaActual
+            }));
+
+            localStorage.setItem("historial", JSON.stringify(data.historial || []));
+
+            alert("Torneo importado correctamente!");
+
+            location.reload(); // Refrescar UI
+        } catch (err) {
+            alert("El archivo no es válido.");
+            console.error(err);
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+
+// -----------------------------------------------------
+// MODO ADMIN
+// -----------------------------------------------------
+
+function activarAdmin() {
+    const pass = prompt("Ingrese contraseña de administrador:");
+
+    if (pass === ADMIN_PASS) {
+        adminMode = true;
+        alert("Modo administrador activado.");
+        mostrarFecha();
+        actualizarTabla();
+    } else {
+        alert("Contraseña incorrecta.");
+    }
+}
+
+// -----------------------------------------------------
+// IMPORTAR TORNEO
+/* function reiniciarLimpio() {
+    if (!confirm("Esto eliminará el torneo actual y cargará los nuevos jugadores. Continuar?")) return;
+    localStorage.removeItem("torneo");
+    localStorage.removeItem("historial");
+    location.reload();
+}
+*/
+// -----------------------------------------------------

@@ -1,0 +1,43 @@
+@use 'variables' as *;
+
+footer {
+  background-color: #1f1f1f;
+  border-top: 3px solid #ffc107;
+  padding: 15px 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+
+  .footer-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    button, .import-btn {
+      background-color: #ffc107;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #000;
+      transition: background-color 0.2s, transform 0.1s;
+
+      &:hover {
+        background-color: #e0a800;
+        transform: scale(1.05);
+      }
+    }
+
+    .import-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+}
