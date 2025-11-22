@@ -1,5 +1,9 @@
 @use 'variables' as *;
 
+/* -------------------------
+   FOOTER - RESPONSIVE
+------------------------- */
+
 footer {
   background-color: #1f1f1f;
   border-top: 3px solid #ffc107;
@@ -12,6 +16,7 @@ footer {
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap;
 
     button, .import-btn {
       background-color: #ffc107;
@@ -33,6 +38,34 @@ footer {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    padding: 12px 16px;
+
+    .footer-container {
+      gap: 12px;
+
+      button, .import-btn {
+        padding: 7px 14px;
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 10px 12px;
+
+    .footer-container {
+      flex-direction: column;
+      gap: 10px;
+
+      button, .import-btn {
+        width: 100%;
+        padding: 8px 0;
+        font-size: 0.9rem;
+      }
     }
   }
 }

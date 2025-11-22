@@ -1,5 +1,9 @@
 @use 'variables' as *;
 
+/* -------------------------
+   NAVBAR - RESPONSIVE
+------------------------- */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -46,6 +50,49 @@
 
       &:hover {
         background-color: #555;
+      }
+    }
+  }
+
+  /* Tablets */
+  @media (max-width: 1024px) {
+    padding: 8px 16px;
+
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    .nav-right {
+      gap: 8px;
+
+      button, .nav-link {
+        padding: 5px 10px;
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  /* Celulares */
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+
+    h1 {
+      font-size: 1.2rem;
+    }
+
+    .nav-right {
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 6px;
+
+      button, .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 0.9rem;
       }
     }
   }

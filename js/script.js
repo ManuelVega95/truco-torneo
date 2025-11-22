@@ -9,7 +9,7 @@ let fixture = [];
 let fechaActual = 0;
 
 // -----------------------------------------------------
-// COLORES (si necesitás usar en el futuro)
+// COLORES (para usar en el futuro)
 // -----------------------------------------------------
 const colores = {
     empate: "#FFC107",
@@ -25,7 +25,35 @@ if (localStorage.getItem("torneo")) {
     jugadores = data.jugadores;
     fixture = data.fixture;
     fechaActual = data.fechaActual;
+} else {
+    fetch("./jugadores.json")
+        .then(res => res.json())
+        .then(data => {
+            if (jugadores.length === 0) {
+                jugadores = data.map(j => ({
+                    ...j,
+                    puntos: 0,
+                    PJ: 0,
+                    V: 0,
+                    E: 0,
+                    D: 0,
+                    bonus: 0,
+                    ultimos: [],
+                    bonusStreak: 0
+                }));
+
+                fixture = generarFixtureAleatorio(jugadores);
+            }
+
+            mostrarFecha();
+            actualizarTabla();
+            llenarSelectorFechas();
+
+            document.getElementById("selector-fecha").value = "todas";
+            mostrarFixtureCompleto();
+        });
 }
+
 
 // -----------------------------------------------------
 // CARGA DE PARTICIPANTES DESDE jugadores.json
@@ -436,7 +464,14 @@ function actualizarTabla() {
             <td>${j.D}</td>
             <td>${j.puntos}</td>
             <td>${j.bonus}</td>
-            <td>${j.ultimos.join(" ")}</td>
+            <td>
+                ${(j.ultimos || []).map(r => {
+                    let colorClass = r === "V" ? "ultimos-v" :
+                                    r === "E" ? "ultimos-e" :
+                                    r === "D" ? "ultimos-d" : "";
+                    return `<span class="${colorClass}">${r}</span>`;
+                }).join(" ")}
+            </td>
         `;
 
         tbody.appendChild(row);
@@ -733,7 +768,11 @@ function reiniciarTorneo() {
     fechaActual = 0;
 
     guardarLocalStorage();
-    location.reload();
+    mostrarFecha();
+    actualizarTabla();
+    llenarSelectorFechas();
+    mostrarFixtureCompleto();
+
 }
 
 // -----------------------------------------------------
@@ -857,13 +896,143 @@ function activarAdmin() {
     }
 }
 
+// =====================================================
+// HISTORIAL Y LISTA DE JUGADORES
+// =====================================================
+
+let historialJugadorActual = [];
+let filtroActual = "todos";
+
+// Generar lista de jugadores al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    generarListaJugadores();
+});
+
+// -----------------------------------------------------
+// GENERAR BOTONES DE JUGADORES
+// -----------------------------------------------------
+function generarListaJugadores() {
+    const cont = document.getElementById("lista-jugadores");
+    if (!cont) return;
+
+    cont.innerHTML = ""; // ⚠️ limpiar contenedor para evitar duplicados
+
+    jugadores.forEach((j, index) => {
+        const btn = document.createElement("button");
+        btn.className = "jugador-btn";
+        btn.textContent = j.nombre;
+        btn.onclick = () => mostrarHistorialJugador(index);
+        cont.appendChild(btn);
+    });
+}
+
+// -----------------------------------------------------
+// MOSTRAR MODAL CON HISTORIAL DEL JUGADOR
+// -----------------------------------------------------
+function mostrarHistorialJugador(idxJugador) {
+    const jugador = jugadores[idxJugador];
+    historialJugadorActual = [];
+    filtroActual = "todos";
+
+    fixture.forEach((fecha, fIndex) => {
+        fecha.forEach(p => {
+            const esLocal = p.local === idxJugador;
+            const esVisit = p.visitante === idxJugador;
+            if (!esLocal && !esVisit) return;
+
+            const rival = esLocal ? jugadores[p.visitante].nombre : jugadores[p.local].nombre;
+            const localia = esLocal ? "(L)" : "(V)";
+
+            let r = "-";
+            if (p.resultado) {
+                if (p.resultado === "empate") r = "E";
+                else if ((p.resultado === "local" && esLocal) ||
+                         (p.resultado === "visitante" && esVisit)) r = "V";
+                else r = "D";
+            }
+
+            historialJugadorActual.push({
+                fecha: fIndex + 1,
+                rival,
+                localia,
+                resultado: r
+            });
+        });
+    });
+
+    // Título del modal
+    document.getElementById("modal-nombre").textContent = jugador.nombre;
+
+    // Render inicial del historial
+    renderHistorialFiltrado();
+
+    // Mostrar modal
+    document.getElementById("modal").style.display = "flex";
+}
+
+// -----------------------------------------------------
+// RENDER DEL HISTORIAL SEGÚN FILTRO
+// -----------------------------------------------------
+function renderHistorialFiltrado() {
+    const cont = document.getElementById("modal-historial");
+    cont.innerHTML = "";
+
+    const filtrado = historialJugadorActual.filter(h => {
+        return filtroActual === "todos" || h.resultado === filtroActual;
+    });
+
+    filtrado.forEach(h => {
+        const div = document.createElement("div");
+        div.className = "partido-h-linea";
+
+        const badgeClase =
+            h.resultado === "V" ? "badge-v" :
+            h.resultado === "E" ? "badge-e" :
+            h.resultado === "D" ? "badge-d" : "";
+
+        div.innerHTML = `
+            <span><strong>Fecha ${h.fecha}</strong> — ${h.rival} ${h.localia}</span>
+            <span class="resultado-badge ${badgeClase}">${h.resultado}</span>
+        `;
+
+        cont.appendChild(div);
+    });
+}
+
+// -----------------------------------------------------
+// FILTROS DE RESULTADOS
+// -----------------------------------------------------
+function cambiarFiltro(f) {
+    filtroActual = f;
+
+    // Actualizar clase activa
+    document.querySelectorAll(".filtro-btn").forEach(btn => {
+        btn.classList.remove("activo");
+        if (btn.dataset.f === f) btn.classList.add("activo");
+    });
+
+    renderHistorialFiltrado();
+}
+
+// -----------------------------------------------------
+// CERRAR MODAL
+// -----------------------------------------------------
+function cerrarModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+
+/*
+
 // -----------------------------------------------------
 // IMPORTAR TORNEO
-/* function reiniciarLimpio() {
+ function reiniciarLimpio() {
     if (!confirm("Esto eliminará el torneo actual y cargará los nuevos jugadores. Continuar?")) return;
     localStorage.removeItem("torneo");
     localStorage.removeItem("historial");
     location.reload();
 }
-*/
+
 // -----------------------------------------------------
+
+*/

@@ -1,5 +1,4 @@
 /* CONTENEDORES GENERALES */
-
 #fixture-completo,
 #partidos {
   margin-top: 12px;
@@ -13,4 +12,50 @@
   margin: 0 0 6px;
   font-size: 1.1rem;
   color: #333;
+}
+
+/* -------------------------
+   ESTILOS RESPONSIVE
+------------------------- */
+
+@media (max-width: 1024px) {
+  #fixture-completo h3 {
+    font-size: 1rem;
+  }
+
+  #fixture-completo .partido-item,
+  #partidos .partido {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #fixture-completo .fila-jugadores span,
+  #fixture-completo .fila-resultado span {
+    display: block;
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  #fixture-completo {
+    margin-top: 8px;
+  }
+
+  #fixture-completo h3 {
+    font-size: 0.95rem;
+  }
+
+  #fixture-completo .partido-item {
+    padding: 6px 4px;
+    font-size: 0.9rem;
+  }
+
+  #fixture-completo .fila-jugadores span,
+  #fixture-completo .fila-resultado span {
+    font-size: 0.85rem;
+  }
+
+  #partidos .partido {
+    font-size: 0.9rem;
+  }
 }

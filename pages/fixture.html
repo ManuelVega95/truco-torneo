@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="fotos/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/estilo.css">
+    <meta name="description=" content="Torneo de truco">
+    <title>Fixture</title>
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+            <h1>TORNEO DE TRUCO</h1>
+            </div>
+            <div class="nav-right">
+            <a href="../index.html" class="nav-link">Inicio</a>
+            <a href="../pages/fixture.html" class="nav-link">Fixture</a>
+            <a href="../pages/jugadores.html" class="nav-link">Jugadores</a>
+            <a href="../pages/historial.html" class="nav-link">Historial del Torneo</a>
+            <a href="../pages/reglas.html" class="nav-link">Reglas</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+    <h2>Fixture Completo</h2>
+
+    <label for="selector-fecha">Seleccionar Fecha:</label>
+    <select id="selector-fecha"></select>
+    <div id="fixture-completo"></div>
+
+    </main>
+
+  <footer>
+    <div class="footer-container">
+      <button id="btn-admin" onclick="activarAdmin()">Modo Admin</button>
+      <button onclick="reiniciarTorneo()">Reiniciar Torneo</button>
+      <button onclick="exportarTorneo()">Exportar Torneo</button>
+      <label class="import-btn">
+        Importar Torneo
+      <input type="file" accept=".json" onchange="importarTorneo(this.files[0])" style="display:none;">
+      </label>
+    </div>
+  </footer>
+            
+    <script src="../js/script.js"></script>
+    <script>
+                document.addEventListener("DOMContentLoaded", () => {
+            if (fixture.length === 0) {
+                console.warn("No hay fixture cargado");
+                return;
+            }
+            llenarSelectorFechas();
+            mostrarFixtureCompleto();
+        });
+    </script>
+</body>
+</html>
